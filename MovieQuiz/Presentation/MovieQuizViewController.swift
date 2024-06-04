@@ -6,6 +6,8 @@ final class MovieQuizViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
     
+    @IBOutlet private var answerButtons: [UIButton]!
+    
     private var overlayView: UIView?
     
     private var currentQuestionIndex = 0
@@ -53,6 +55,7 @@ final class MovieQuizViewController: UIViewController {
         let action = UIAlertAction(title: result.buttonText, style: .default) { _ in
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
+            self.buttonState()
             
             let firstQuestion = self.questions[self.currentQuestionIndex]
             let viewModel = self.convert(model: firstQuestion)
@@ -90,7 +93,7 @@ final class MovieQuizViewController: UIViewController {
         } else {
             currentQuestionIndex += 1
             let viewModel = convert(model: questions[currentQuestionIndex])
-            
+            buttonState()
             showQuestion(quiz: viewModel)
         }
     }
@@ -103,10 +106,17 @@ final class MovieQuizViewController: UIViewController {
             imageView.layer.borderColor = UIColor.ypRed.cgColor
         }
         
+        buttonState(isEnabled: false)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.showNextQuestionOrResult()
             self.imageView.layer.borderColor = UIColor.clear.cgColor
         }
+    }
+    
+    private func buttonState(isEnabled: Bool = true) {
+        answerButtons[0].isEnabled = isEnabled
+        answerButtons[1].isEnabled = isEnabled
     }
     
     private struct QuizQuestion {
