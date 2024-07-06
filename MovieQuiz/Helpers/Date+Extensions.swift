@@ -7,12 +7,12 @@
 
 import Foundation
 
-private let dateTimeDefaultFormatter: DateFormatter = {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "dd.MM.YY hh:mm"
-    return dateFormatter
-}()
-
 extension Date {
+    private var dateTimeDefaultFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.YY hh:mm"
+        return dateFormatter
+    }
+    
     var dateTimeString: String { dateTimeDefaultFormatter.string(from: self) }
 }
