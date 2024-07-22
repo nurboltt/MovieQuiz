@@ -9,7 +9,7 @@ import UIKit
 
 final class AlertPresenter {
     
-    weak var movieVC: MovieQuizViewController?
+    private weak var movieVC: MovieQuizViewController?
     
     init(movieVC: MovieQuizViewController) {
         self.movieVC = movieVC
@@ -21,6 +21,8 @@ final class AlertPresenter {
             title: model.title,
             message: model.message,
             preferredStyle: .alert)
+        
+        alert.view.accessibilityIdentifier = "alert"
         
         let action = UIAlertAction(title: model.buttonText, style: .default) { _ in
             model.completion()
